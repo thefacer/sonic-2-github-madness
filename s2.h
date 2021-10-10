@@ -220,6 +220,6 @@ comp_z80_size 0x155A  fÅr C-Programm */
 #define Sound_DB 0x13FFB3
 #define word_728C_user 0x717C
 #define Obj5F_MapUnc_7240 0x71FC
-#define off_3A294 0x5E9E6
-#define MapRUnc_Sonic 0x95BC0
+#define off_3A294 0x5EA2A
+#define MapRUnc_Sonic 0x95C00
 /* Ende Includefile fÅr C-Programm */

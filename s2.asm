@@ -14453,7 +14453,7 @@ SwScrl_EHZ:
 	swap	d3
 	dbf	d1,-
 
-	move.w	#($B4)/12-1,d1 ; $B4 bytes
+        move.w	#($B4)/12-1,d1 ; $B4 bytes
 -	move.w	d4,(a1)+
 	move.w	d3,(a1)+
 	move.w	d4,(a1)+
@@ -14466,8 +14466,10 @@ SwScrl_EHZ:
 	add.l	d0,d3
 	swap	d3
 	dbf	d1,-
-
-	; note there is a bug here. the bottom 8 pixels haven't had their hscroll values set. only the EHZ scrolling code has this bug.
+	move.w	d4,(a1)+
+	move.w	d3,(a1)+
+	move.w	d4,(a1)+
+	move.w	d3,(a1)+
 
 	rts
 ; ===========================================================================
@@ -33926,6 +33928,15 @@ Sonic_UpdateSpindash:
 	move.b	#0,(Sonic_Dust+anim).w
 	move.w	#SndID_SpindashRelease,d0	; spindash zoom sound
 	jsr	(PlaySound).l
+	move.b	angle(a0),d0
+	jsr	(CalcSine).l
+	muls.w	inertia(a0),d1
+	asr.l	#8,d1
+	move.w	d1,x_vel(a0)
+	muls.w	inertia(a0),d0
+	asr.l	#8,d0
+	move.w	d0,y_vel(a0)
+	
 	bra.s	Obj01_Spindash_ResetScr
 ; ===========================================================================
 ; word_1AD0C:
@@ -36660,6 +36671,7 @@ Tails_UpdateSpindash:
 	move.b	#0,(Tails_Dust+anim).w
 	move.w	#SndID_SpindashRelease,d0	; spindash zoom sound
 	jsr	(PlaySound).l
+
 	bra.s	loc_1C828
 ; ===========================================================================
 ; word_1C7CE:
@@ -59161,7 +59173,16 @@ loc_316780:					  ; ...
 		bset	#2,$22(a0)
 		move.b	#0,($FFFFD11C).w
 		move.w	#SndID_SpindashRelease,d0	; spindash zoom sound
-	jsr	(PlaySound).l
+	        jsr	(PlaySound).l
+	        move.b	angle(a0),d0
+                jsr	(CalcSine).l
+	        muls.w	inertia(a0),d1
+                asr.l	#8,d1
+	        move.w	d1,x_vel(a0)
+	        muls.w	inertia(a0),d0
+	        asr.l	#8,d0
+	        move.w	d0,y_vel(a0)
+	        
 		bra.s	Obj4D_Spindash_ResetScreen
 ; ---------------------------------------------------------------------------
 Spindash_Speeds:				  ; ...
